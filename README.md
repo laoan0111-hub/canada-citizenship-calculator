@@ -1,31 +1,114 @@
-# Canada Citizenship Calculator (GUI)
+```markdown
+# Canada Citizenship Calculator (1095 days, rolling 5-year window)
 
-A simple Java Swing GUI tool to estimate **Canadian citizenship physical presence credit**
-using the **rolling 5-year window** rule and **1095 credited days** requirement.
+A **Java desktop GUI** tool to calculate Canadian citizenship eligibility based on
+the **rolling 5-year window** and **1095 credited days** rule, including
+**pre-PR half-credit (max 365 physical days)** and **post-PR full credit**.
+
+---
 
 ## Features
+
 - GUI (Java Swing)
-- Add multiple travel stays (Entry / Exit)
-- Supports **ongoing stay** (blank exit = still in Canada)
+- Multiple **entry / exit** records supported
+- **Blank exit = ongoing stay**
+- Correct **rolling 5-year window** logic
+- Pre-PR: **0.5 credit per day**, capped at **365 physical days**
+- Post-PR: **1.0 credit per day**
 - Calculates:
-  - Credited days as of today (rolling 5-year window)
-  - Remaining credited days to reach 1095
-  - Earliest eligibility date (qualifying date)
-  - Countdown (days) from today to eligibility date
-  - The 5-year window used for the qualifying date
+  - Credited days **as of today**
+  - Remaining days to **1095**
+  - **Earliest qualifying (eligibility) date**
+  - Countdown (days)
+  - Window actually checked
 
-## Rules Implemented (Simplified)
-- Rolling **5-year window** ending on the date being evaluated.
-- Requires **1095 credited days**.
-- **Pre-PR** days: credited at **0.5** up to **365 physical days** maximum.
-- **Post-PR** days: credited at **1.0**.
+---
 
-> Note: This is an estimation tool for learning and planning. Always verify with official IRCC guidance.
+## Files
 
-## Requirements
-- Java 17+ (or Java 11+ should work if you're not using newer APIs)
+- `Main.java`  
+  GUI entry point (Swing UI, user interaction)
 
-Check:
+- `CitizenshipCalculator.java`  
+  Core calculation logic (no UI)
+
+- `Stay.java`  
+  Data model for one stay (entry / exit)
+
+---
+
+## How the calculation works (summary)
+
+1. For a given date **D**, define a window:  
+   `window = [D − 5 years, D]`
+
+2. Count only days **inside the window**
+
+3. Split days:
+   - **Before PR date** → 0.5 credit/day, max **365 physical days**
+   - **On / after PR date** → 1.0 credit/day
+
+4. Find the **earliest date D** such that:
+```
+
+credited_days(D) ≥ 1095
+
+````
+
+---
+
+## How to run
+
 ```bash
-java -version
+cd day2-citizenship-app
+javac *.java
+java Main
+````
 
+---
+
+## Input rules (GUI)
+
+* Dates must be `YYYY-MM-DD`
+* Add multiple stays using **Add stay**
+* Leave **Exit blank** if the stay is ongoing
+* Click **Calculate** to compute results
+
+---
+
+## Example
+
+PR date:
+
+```
+2025-10-08
+```
+
+Stays:
+
+```
+2022-09-21 → ongoing
+```
+
+Result:
+
+```
+Eligibility date (qualifying date): 2027-10-09
+Countdown (days): XXX
+```
+
+---
+
+## Notes
+
+* This tool is for **planning / estimation only**
+* Always verify with IRCC official calculator before applying
+
+---
+
+## License
+
+MIT (or personal use)
+
+```
+```
