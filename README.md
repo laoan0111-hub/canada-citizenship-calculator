@@ -57,10 +57,7 @@ the **rolling 5-year window** and **1095 credited days** rule, including
    - **Before PR date** → 0.5 credit/day, max **365 physical days**
    - **On / after PR date** → 1.0 credit/day
 
-4. Find the **earliest date D** such that:
-```
-
-credited_days(D) ≥ 1095
+4. Find the earliest date **D** such that `credited_days(D) ≥ 1095`.
 
 ````
 
