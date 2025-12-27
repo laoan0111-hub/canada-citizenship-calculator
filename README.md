@@ -24,9 +24,6 @@ the **rolling 5-year window** and **1095 credited days** rule, including
 
 ---
 
-## Screenshot
-
-![GUI Demo](screenshots/GUI%20demo.png)
 
 ## Design Notes
 
