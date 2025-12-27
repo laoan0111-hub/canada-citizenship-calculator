@@ -85,15 +85,18 @@ public class Main {
                 }
 
                 double creditedToday = CitizenshipCalculator.creditedDaysInWindow(stays, prDate, today);
-                LocalDate eligibility = CitizenshipCalculator.findEligibilityDate(stays, prDate, today);
+                 LocalDate eligibility = CitizenshipCalculator.findEligibilityDate(stays, prDate, today);
 
                 StringBuilder sb = new StringBuilder();
                 sb.append("=== Result ===\n");
                 sb.append("PR date: ").append(prDate).append("\n");
                 sb.append("Today:   ").append(today).append("\n\n");
 
-                sb.append(String.format("Credited days as of today (rolling 5-year window): %.1f\n", creditedToday));
-                sb.append(String.format("Remaining to 1095: %.1f\n", Math.max(0, 1095 - creditedToday)));
+                CreditResult r = CitizenshipCalculator.creditedBreakdownInWindow(stays, prDate, today);
+
+                sb.append("Pre-PR credited: ").append(r.prePrCredited).append("\n");
+                sb.append("Post-PR credited: ").append(r.postPrCredited).append("\n");
+                sb.append("Total credited: ").append(r.totalCredited()).append("\n");
 
                 if (eligibility == null) {
                     sb.append("\nEligibility date: NOT FOUND within 10 years (check inputs)\n");

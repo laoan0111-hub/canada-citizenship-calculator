@@ -12,7 +12,9 @@ public class CitizenshipCalculator {
     // Returns credited days in the 5-year window ending on "asOf" (inclusive end),
     // assuming the person is in Canada unless outside the stays list.
     // We only count days within stays intervals that overlap the window.
-    public static double creditedDaysInWindow(List<Stay> stays, LocalDate prDate, LocalDate asOf) {
+    public static CreditResult creditedBreakdownInWindow(List<Stay> stays, LocalDate prDate, LocalDate asOf) {
+
+
         LocalDate windowStart = asOf.minusYears(5); // start of window (same month/day), inclusive
         LocalDate windowEnd = asOf;                 // inclusive
 
@@ -63,8 +65,14 @@ public class CitizenshipCalculator {
             }
         }
 
-        return prePrCredited + postPrCredited;
+        return new CreditResult(prePrCredited, postPrCredited);
     }
+
+    public static double creditedDaysInWindow(List<Stay> stays, LocalDate prDate, LocalDate asOf) {
+    CreditResult r = creditedBreakdownInWindow(stays, prDate, asOf);
+    return r.totalCredited();
+    }
+
 
     // Find earliest eligibility date >= today assuming continuous presence after last entry if exit is blank.
     public static LocalDate findEligibilityDate(List<Stay> stays, LocalDate prDate, LocalDate today) {
@@ -74,8 +82,9 @@ public class CitizenshipCalculator {
         LocalDate limit = today.plusYears(10);
 
         while (!d.isAfter(limit)) {
-            double credited = creditedDaysInWindow(stays, prDate, d);
-            if (credited >= REQUIRED_CREDITED_DAYS) return d;
+            CreditResult r = creditedBreakdownInWindow(stays, prDate, d);
+if (r.totalCredited() >= REQUIRED_CREDITED_DAYS) return d;
+
             d = d.plusDays(1);
         }
 
@@ -89,4 +98,8 @@ public class CitizenshipCalculator {
     private static LocalDate min(LocalDate a, LocalDate b) {
         return a.isBefore(b) ? a : b;
     }
+   
+
 }
+
+
