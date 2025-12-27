@@ -24,6 +24,18 @@ the **rolling 5-year window** and **1095 credited days** rule, including
 
 ---
 
+## Screenshot
+
+![GUI Demo](screenshots/GUI%20demo.png)
+
+## Design Notes
+
+- The GUI layer does not perform any date or credit calculation.
+- All business logic is encapsulated in `CitizenshipCalculator`.
+- `CreditResult` is a value object used to expose pre-PR and post-PR credit breakdown.
+- This separation allows the calculator to be reused in CLI, GUI, or web applications.
+
+
 ## Files
 
 - `Main.java`  
