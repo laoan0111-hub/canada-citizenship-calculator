@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Main {
 
+
     private static LocalDate parseDateOrNull(String s) {
         if (s == null) return null;
         s = s.trim();
@@ -84,7 +85,7 @@ public class Main {
                     throw new IllegalArgumentException("Please add at least one stay (entry date).");
                 }
 
-                double creditedToday = CitizenshipCalculator.creditedDaysInWindow(stays, prDate, today);
+
                  LocalDate eligibility = CitizenshipCalculator.findEligibilityDate(stays, prDate, today);
 
                 StringBuilder sb = new StringBuilder();
@@ -93,10 +94,8 @@ public class Main {
                 sb.append("Today:   ").append(today).append("\n\n");
 
                 CreditResult r = CitizenshipCalculator.creditedBreakdownInWindow(stays, prDate, today);
-
-                sb.append("Pre-PR credited: ").append(r.prePrCredited).append("\n");
-                sb.append("Post-PR credited: ").append(r.postPrCredited).append("\n");
-                sb.append("Total credited: ").append(r.totalCredited()).append("\n");
+                sb.append("\n--- Credit breakdown (today) ---\n");
+                sb.append(r.toString()).append("\n");
 
                 if (eligibility == null) {
                     sb.append("\nEligibility date: NOT FOUND within 10 years (check inputs)\n");

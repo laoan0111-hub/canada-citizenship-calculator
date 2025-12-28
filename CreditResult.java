@@ -10,4 +10,12 @@ public class CreditResult {
     public double totalCredited() {
         return prePrCredited + postPrCredited;
     }
+    @Override
+public String toString() {
+    return String.format(
+        "Pre-PR credited: %.1f days\nPost-PR credited: %.1f days\nTotal credited: %.1f days",
+        prePrCredited, postPrCredited, totalCredited()
+    );
+}
+
 }

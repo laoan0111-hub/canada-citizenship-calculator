@@ -40,9 +40,6 @@ public class CitizenshipCalculator {
 
             if (overlapEnd.isBefore(overlapStart)) continue;
 
-            // Count inclusive days in overlap
-            long physicalDays = ChronoUnit.DAYS.between(overlapStart, overlapEnd) + 1;
-
             // Split by PR date
             // Part A: before PR (strictly < prDate)
             LocalDate preEnd = min(overlapEnd, prDate.minusDays(1));
